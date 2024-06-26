@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/x-icon" href="/Assets/Icons/Shin_Arts_48.ico" sizes="48x48">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    
+    <title>Shin Arts - Contact</title>
+    <style>
+      @font-face {
+        font-family: novelDisplay;
+        src: url('/Assets/Fonts/NovelDisplay-ExtraBold.otf');
+      }
+
+      body{
+        margin: 0;
+        padding: 0;
+        font-family: "Poppins";
+        font-weight: 500;
+        background-color: #06141B;
+      }
+
+      h2,p{
+        margin: 0;          
+        padding: 0;
+      }
+
+      .popup-box{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      
+      .main-container{
+        display: flex;
+        flex-direction: column;
+        background-color: #1a272e;
+      }
+
+      .container-left{
+        height: 300px;
+        width: auto;
+        background-size: cover;
+        background-repeat: no-repeat;
+        overflow: hidden;
+      }
+
+      .container-left, .container-right{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .container-right .popup-content{
+        color: #FBFBF2;
+        text-align: center;
+      }
+
+      .container-right .popup-icon{
+        font-size: 8rem;
+      }
+
+      .container-right .popup-title h2{
+        margin-bottom: 2rem;
+        font-family: "novelDisplay";
+        font-size: 2.5rem;
+        color: #F3587A;
+      }
+
+      .container-right .popup-description p{
+        margin-bottom: 2rem;
+        margin-left: 1rem;
+        margin-right: 1rem;
+        font-size: 1rem;
+      }
+
+      .container-right .popup-btn button{
+        display: block;
+        width: 100%;
+        background-color: #3db1bb;
+        color: #FBFBF2;
+        font-weight: 700;
+        border: none;
+        padding: 1rem;
+        font-size: 1rem;
+        text-transform: uppercase;
+        transition: 0.4s ease-in;
+      }
+
+      .container-right .popup-btn button:hover {
+        background-color: #04A8B4;
+        cursor: pointer;
+      }
+
+      .popup-error .popup-icon, .popup-error .popup-title h2{
+      color: red;
+    }
+    .popup-error .popup-btn button{
+      background-color: red;
+    }
+    .popup-success .popup-icon, .popup-success .popup-title h2 {
+      color: green;
+    }
+    .popup-success .popup-btn button{
+      background-color: green;
+    }
+    .popup-btn button {
+      display: block;
+      width: 100%;
+      color: #FBFBF2;
+      font-weight: 700;
+      border: none;
+      padding: 1rem;
+      font-size: 1rem;
+      text-transform: uppercase;
+      transition: 0.4s ease-in;
+    }
+    .popup-btn button:hover {
+      cursor: pointer;
+    }
+
+      @media (min-width: 990px) {
+        .main-container{
+          flex-direction: row;
+          max-width: 1020px;
+        }
+        .container-left,
+        .container-right{
+          display: flex;
+          width: 50%;
+          height: 700px;
+        }
+        .container-right{
+          position: relative;
+        }
+        .container-right .popup-btn button{
+          position: absolute;
+          bottom: 0;
+        }
+      }
+      @media (max-width: 768px) {
+    .popup-box {
+        width: 80%;
+    }
+
+    .main-container {
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+    }
+
+    .container-right {
+        width: 100%;
+    }
+
+    .container-left{
+      width: 100%;
+    }
+}
+
+@media (max-width: 520px) {
+  .container-left {
+        display: none;
+    }
+  .popup-icon{
+    margin: 1rem 1.5rem;
+  }
+
+  .popup-title{
+    margin: 0 1.5rem;
+  }
+
+  .popup-description{
+    margin: 0 1.5rem;
+  }
+
+}
+    </style>
+</head>
+<body>
+  <div class="popup-box">
+    <div class="main-container">
+      <div class="container-left">
+        <img src="/Assets/Images/Pop-Up.jpg" alt="Girl With a Sunflower Illustration">
+      </div>
+      <div class="container-right">
+        <div class="<%= popUpClass %>">
+          <div class="popup-content">
+            <div class="popup-icon">
+              <i class="<%= popUpIcon %>"></i>
+            </div>
+            <div class="popup-title">
+              <h2><%= popUpTitle %></h2>
+            </div>
+            <div class="popup-description">
+              <p><%= popUpMessage %></p>
+              <p>Lorem Ipsum Gene, Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <p>Lorem Ipsum Gene, Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>
+            <div class="popup-btn">
+              <button id="popup-contact-btn">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.getElementById("popup-contact-btn").addEventListener("click", function(){
+      document.getElementsByClassName("popup-box")[0].classList.remove("active");
+      window.location.href = '/contact'; 
+    });
+    setTimeout(function(){
+      window.location.href = '/contact';
+    }, 5000);
+  </script>
+</body>
+</html>

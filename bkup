@@ -1,0 +1,398 @@
+ <div class="container">
+      <div class="hero-row">
+        <div class="hero-text">
+          <div class="hero-content">
+            <div class="text-hero-bold">
+              <span class="text-greetings">Hello</span>
+              <p>I'm <span class="hero-name">Shal Thunglano</span></p>
+            </div>
+            <div class="text-hero-regular">
+              <p>A Multi Medium Artist</p>
+            </div>
+            <div class="text-tagline">
+              <p>
+                "In Him was life, and that life was the light of all mankind." -
+                John 1:4
+              </p>
+            </div>
+            <div class="cta">
+              <div>
+                <a href="/contact"><button class="wBGSlideBtn" type="button">
+                    <span>Available for Hire</span>
+                  </button></a>
+              </div>
+              <div>
+                <a href="/work"><button class="woBGSlideBtn" type="button">
+                    <span>Price Sheet</span>
+                  </button></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-graphics">
+          <img src="/Assets/Images/Shin_Arts_Hero_Profile.png" alt="Self-Portrait" class="hero-img" />
+        </div>
+      </div>
+    </div>
+
+    .hero-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+}
+
+.text-greetings {
+  font-size: 16px;
+  font-weight: 200;
+  text-transform: uppercase;
+  letter-spacing: .5rem;
+  color: var(--color-grey-shade-05);
+}
+
+.text-greetings:after {
+  content: '';
+  width: 120px;
+  height: 2px;
+  display: inline-block;
+  background: var(--color-primary);
+  margin: 6px 10px;
+}
+
+.hero-name {
+  color: var(--color-primary);
+}
+
+.text-hero-bold,
+.text-hero-regular,
+.text-tagline {
+  margin: 8px 0;
+}
+
+.text-hero-bold {
+  color: var(--color-default);
+  font-family: var(--font-default);
+  font-size: 54px;
+  font-weight: 700;
+}
+
+.text-hero-regular {
+  color: var(--color-grey-shade-01);
+  font-size: 32px;
+  font-weight: 400;
+}
+
+.text-tagline {
+  color: var(--color-grey-shade-04);
+  font-size: 16px;
+  font-weight: 200;
+}
+
+.cta {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+.hero-img {
+  width: 650px;
+  height: auto;
+  cursor: pointer;
+}
+
+.wBGSlideBtn {
+  position: relative;
+  background: var(--color-primary-shade-01);
+  color: var(--color-grey-shade-01);
+  border: 2px solid var(--color-primary-shade-01);
+  padding: 12px 20px;
+  font-size: 18px;
+  font-weight: 500;
+  width: 200px;
+  cursor: pointer;
+  z-index: 0;
+}
+
+.wBGSlideBtn:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 100%;
+  left: 0;
+  background: var(--color-primary);
+  opacity: 1;
+  z-index: -1;
+  transition: all 0.5s;
+}
+
+.wBGSlideBtn:hover {
+  border-color: var(--color-primary);
+  transition: all 0.5s;
+}
+
+.wBGSlideBtn:hover span {
+  color: var(--color-default);
+}
+
+.wBGSlideBtn:hover::before {
+  left: 0;
+  right: 0;
+  opacity: 1;
+}
+
+.woBGSlideBtn {
+  position: relative;
+  color: var(--color-grey-shade-05);
+  background: none;
+  border: 2px solid var(--color-grey-shade-05);
+  padding: 12px 20px;
+  font-size: 18px;
+  font-weight: 500;
+  width: 150px;
+  cursor: pointer;
+  z-index: 0;
+}
+
+.woBGSlideBtn:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 100%;
+  left: 0;
+  background: var(--color-secondary);
+  opacity: 1;
+  z-index: -1;
+  transition: all 0.5s;
+}
+
+.woBGSlideBtn:hover {
+  border-color: var(--color-secondary);
+  transition: all 0.5s;
+}
+
+.woBGSlideBtn:hover span {
+  color: var(--color-default);
+}
+
+.woBGSlideBtn:hover::before {
+  left: 0;
+  right: 0;
+  opacity: 1;
+}
+
+
+
+*
+@media (max-width:1200px) {
+
+  .art-container {
+    grid-template-columns: 1fr;
+    place-items: center;
+  }
+
+  .art-card {
+    width: 600px;
+  }
+}
+
+@media (max-width: 990px) {
+  .testimonial .testimonial-wrapper {
+    flex-direction: column;
+    padding: 30px 20px;
+  }
+
+  .testimonial :is(.swiper-button-next, .swiper-button-prev) {
+    top: 25%;
+  }
+
+  .testimonial .thumbnail img {
+    transform: scale(1.7);
+    transition: transform .2s;
+  }
+}
+
+@media (max-width:768px) {
+  .mainHead {
+    font-size: 54px;
+  }
+
+  .art-card {
+    width: 100%;
+  }
+}
+
+@media (max-width:520px) {
+  .art-card {
+    height: 600px;
+  }
+
+  .card-content {
+    height: 140px;
+  }
+
+  .card-name {
+    font-size: 40px;
+    line-height: 1;
+  }
+
+  .card-info {
+    align-items: center;
+    transform: translateY(200px);
+  }
+
+  .card-desc {
+    display: none;
+  }
+
+  .btn-img {
+    position: static;
+    top: 0;
+    left: 0;
+    right: 0;
+    transform: translateY(30px);
+  }
+
+  .testimonial-head {
+    padding: 40px 20px;
+  }
+
+  .testimonial .thumbnail img {
+    transform: scale(1.2);
+    transition: transform .2s;
+  }
+
+  .testimonials-section {
+    padding-top: 0;
+  }
+}
+
+@media (max-width: 400px) {
+  .card-name {
+    font-size: 35px;
+  }
+
+  .testimonial-head h2 {
+    font-size: 28px;
+  }
+}
+/*
+.grid-gallery .grid-item:nth-child(3n - 2) {
+  grid-column: span 2;
+  grid-row: span 2;
+}*/
+
+
+  <div class="container">
+    <div class="about-row">
+      <div class="about-graphics">
+        <img src="/Assets/Images/Shin_About_Cover.jpg" alt="Shin's Profile Picture" class="about-img">
+      </div>
+      <div class="about-text">
+        <div class="paraHeading">
+          <h1>Hi! I am <span class="sp-01">Shalini Thunglano!</span></h1>
+          <h2>I'm an <span class="sp-02">Artist</span> working from Nagaland, India.</h2>
+        </div>
+        <div class="para-content">
+          <div class="para-01">
+            <p>I am a self taught artist. I have been drawing as a hobby since childhood and when I reflect back its inspiring to know how far I have come.</p>
+          </div>
+          <div class="para-02">
+            <p>I desire to be a blessing with this gift of mine, I am always grateful to my dear ones who have never stopped believing in me. </p>
+          </div>
+          <div class="para-03">
+            <p>
+            My ultimate goal is to inspire, encourage and change lives using this skills of mine. I desire
+            to spread hope, comfort and love with my all. Thank you for your support and love on this
+            journey of mine! Be blessed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+.about-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 20px;
+}
+
+.about-img {
+  width: 500px;
+  height: 675px;
+  cursor: pointer;
+  max-width: none;
+}
+
+.about-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.paraHeading h1 {
+  font-family: var(--font-primary);
+  color: var(--color-default);
+  font-size: 64px;
+  margin-bottom: 20px;
+}
+
+.paraHeading h2 {
+  font-family: var(--font-primary);
+  color: var(--color-default);
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.para-content{
+  margin-bottom: 18rem;
+}
+
+.para-01,
+.para-02,
+.para-03 {
+  margin-bottom: 20px;
+  padding-right: 30px;
+  font-size: 20px;
+  text-align: justify;
+  color: var(--color-grey-shade-04);
+}
+
+.about-head h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-default);
+}
+
+.about-head .about-head-01 {
+  font-size: 16px;
+  font-weight: 200;
+  text-transform: uppercase;
+  letter-spacing: .05rem;
+  color: var(--color-grey-shade-04);
+}
+
+.about-head .about-head-01:after {
+  content: '';
+  width: 120px;
+  height: 2px;
+  display: inline-block;
+  background: var(--color-primary);
+  margin: 6px 10px;
+}
+
+.about-head h2 span {
+  color: var(--color-primary);
+}
+
+.paraHeading .sp-01 {
+  color: var(--color-primary);
+}
+
+.paraHeading .sp-02 {
+  color: var(--color-secondary);
+}

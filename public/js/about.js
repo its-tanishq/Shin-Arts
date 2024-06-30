@@ -1,33 +1,79 @@
-const inputs = document.querySelectorAll(".about-input");
-inputs.forEach((ipt) => {
-  ipt.addEventListener("focus", () => {
-    ipt.parentNode.classList.add("focus");
-    ipt.parentNode.classList.add("not-empty");
-  });
-  ipt.addEventListener("blur", () => {
-    if (ipt.value == "") {
-      ipt.parentNode.classList.remove("not-empty");
-    }
-    ipt.parentNode.classList.remove("focus");
-  });
-});
-
 document.addEventListener('DOMContentLoaded', function () {
-  function capitalize(input) {
-    input.value = input.value.replace(/\b\w/g, function (char) {
-      return char.toUpperCase();
+  const elementsToAnimate = [
+    { selector: '.about-heading', direction: 'left' },
+    { selector: '.about-info', direction: 'left' },
+    { selector: '.about-profile', direction: 'right' },
+    { selector: '.main-head', direction: 'left' },
+    { selector: '.about-head', direction: 'right' },
+    { selector: '.art-sm-card', direction: 'bottom' },
+    { selector: '.swiper-gl-container', direction: 'bottom' },
+    { selector: '.newsletter-img-profile', direction: 'right' },
+    { selector: '.newsletter-sub-heading', direction: 'left' },
+    { selector: '.newsletter-form', direction: 'bottom' },
+    { selector: '.art-ques-card', direction: 'top' },
+  ];
+
+  const generateConfig = (direction) => {
+    let transform;
+    switch (direction) {
+      case 'left':
+        transform = 'translateX(-100px)';
+        break;
+      case 'right':
+        transform = 'translateX(100px)';
+        break;
+      case 'bottom':
+        transform = 'translateY(100px)';
+        break;
+      case 'top':
+        transform = 'translateY(-100px)';
+        break;
+    }
+    return {
+      initial: {
+        transform,
+        opacity: '0',
+        transition:
+          'transform 1.5s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 1.5s cubic-bezier(0.25, 0.8, 0.25, 1)',
+      },
+      final: {
+        transform: 'translateX(0)',
+        opacity: '1',
+      },
+    };
+  };
+
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: [0, 0.75],
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const element = entry.target;
+      const config = JSON.parse(element.dataset.config);
+      if (entry.isIntersecting) {
+        element.style.transform = config.final.transform;
+        element.style.opacity = config.final.opacity;
+        element.style.transition = config.initial.transition;
+      } else if (entry.intersectionRatio < 0.75) {
+        element.style.transform = config.initial.transform;
+        element.style.opacity = config.initial.opacity;
+        element.style.transition = config.initial.transition;
+      }
     });
-  }
+  }, observerOptions);
 
-  const fNameInput = document.getElementById('fName');
-  const lNameInput = document.getElementById('lName');
-
-  fNameInput.addEventListener('input', function () {
-    capitalize(fNameInput);
-  });
-
-  lNameInput.addEventListener('input', function () {
-    capitalize(lNameInput);
+  elementsToAnimate.forEach(({ selector, direction }) => {
+    const config = generateConfig(direction);
+    document.querySelectorAll(selector).forEach((element) => {
+      element.style.transform = config.initial.transform;
+      element.style.opacity = config.initial.opacity;
+      element.style.transition = config.initial.transition;
+      element.dataset.config = JSON.stringify(config);
+      observer.observe(element);
+    });
   });
 });
 
@@ -37,7 +83,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
   // Function to validate email with specific allowed domains
   function validateEmail(email) {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!re.test(String(email).toLowerCase())) {
       return false;
     }
@@ -47,7 +94,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // List of allowed domains
     const allowedDomains = [
-      'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'icloud.com', // Add more domains as needed
+      'gmail.com',
+      'yahoo.com',
+      'hotmail.com',
+      'outlook.com',
+      'icloud.com', // Add more domains as needed
     ];
 
     // Check if the domain is in the list of allowed domains
@@ -56,8 +107,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
   // Function to update UI based on validation
   function updateUI(isValid) {
-    const emailIcon = document.querySelector('#email').parentNode.querySelector('.about-icon');
-    
+    const emailIcon = document
+      .querySelector('#email')
+      .parentNode.querySelector('.about-icon');
+
     if (isValid) {
       emailInput.classList.remove('invalid');
       emailInput.style.borderColor = ''; // Reset to default
@@ -114,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 $(document).ready(function () {
-  $("#about-slider-cn").owlCarousel({
+  $('#about-slider-cn').owlCarousel({
     items: 1,
     itemsDesktop: [1000, 1],
     itemsDesktopSmall: [979, 1],
@@ -122,28 +175,11 @@ $(document).ready(function () {
     margin: 10,
     pagination: true,
     navigation: false,
-    autoPlay: true
+    autoPlay: true,
   });
 });
 
-const sr = ScrollReveal({
-  origin: 'top',
-  distance: '70px',
-  duration: 2500,
-  delay: 400,
-  reset: true,
-});
-
-sr.reveal('.about-info, .swiper-gl-container, .about-form', { origin: 'right' });
-sr.reveal(
-  '.about-profile, .about-heading, .about-head, .news-sub-heading, .news-sub-heading-end',
-  { origin: 'left' },
-);
-sr.reveal('.art-sm-card, .art-ques-card, .news-img', {
-  interval: 100,
-});
-
 var path = window.location.pathname;
-  if (path === "/about") {
-    document.getElementById("pageTitle").innerText = "Shin Arts - About";
-  }
+if (path === '/about') {
+  document.getElementById('pageTitle').innerText = 'Shin Arts - About';
+}

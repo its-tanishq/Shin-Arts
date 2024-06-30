@@ -1,41 +1,121 @@
-const inputs = document.querySelectorAll(".contact-input");
-inputs.forEach((ipt) => {
-  ipt.addEventListener("focus", () =>{
-    ipt.parentNode.classList.add("focus");
-    ipt.parentNode.classList.add("not-empty");
-  });
-  ipt.addEventListener("blur", () => {
-    if(ipt.value==""){
-      ipt.parentNode.classList.remove("not-empty");
+document.addEventListener('DOMContentLoaded', function () {
+  const elementsToAnimate = [
+    { selector: '.contact-hero-img', direction: 'right' },
+    { selector: '.form-wrapper', direction: 'left' },
+    { selector: '.contact-head', direction: 'right' },
+    { selector: '.swipe-container', direction: 'top' },
+    { selector: '.contact-slide-content h1', direction: 'left' },
+    { selector: '.contact-slide-content p', direction: 'right' },
+    { selector: '.contact-timeline', direction: 'top' },
+    { selector: '.main-head', direction: 'left' },
+    { selector: '.insta-feed-container', direction: 'top' },
+  ];
+
+  const generateConfig = (direction) => {
+    let transform;
+    switch (direction) {
+      case 'left':
+        transform = 'translateX(-100px)';
+        break;
+      case 'right':
+        transform = 'translateX(100px)';
+        break;
+      case 'bottom':
+        transform = 'translateY(100px)';
+        break;
+      case 'top':
+        transform = 'translateY(-100px)';
+        break;
     }
-    ipt.parentNode.classList.remove("focus");
+    return {
+      initial: {
+        transform,
+        opacity: '0',
+        transition:
+          'transform 1.5s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 1.5s cubic-bezier(0.25, 0.8, 0.25, 1)',
+      },
+      final: {
+        transform: 'translateX(0)',
+        opacity: '1',
+      },
+    };
+  };
+
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: [0, 0.75],
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const element = entry.target;
+      const config = JSON.parse(element.dataset.config);
+      if (entry.isIntersecting) {
+        element.style.transform = config.final.transform;
+        element.style.opacity = config.final.opacity;
+        element.style.transition = config.initial.transition;
+      } else if (entry.intersectionRatio < 0.75) {
+        element.style.transform = config.initial.transform;
+        element.style.opacity = config.initial.opacity;
+        element.style.transition = config.initial.transition;
+      }
+    });
+  }, observerOptions);
+
+  elementsToAnimate.forEach(({ selector, direction }) => {
+    const config = generateConfig(direction);
+    document.querySelectorAll(selector).forEach((element) => {
+      element.style.transform = config.initial.transform;
+      element.style.opacity = config.initial.opacity;
+      element.style.transition = config.initial.transition;
+      element.dataset.config = JSON.stringify(config);
+      observer.observe(element);
+    });
+  });
+});
+
+const inputs = document.querySelectorAll('.contact-input');
+inputs.forEach((ipt) => {
+  ipt.addEventListener('focus', () => {
+    ipt.parentNode.classList.add('focus');
+    ipt.parentNode.classList.add('not-empty');
+  });
+  ipt.addEventListener('blur', () => {
+    if (ipt.value == '') {
+      ipt.parentNode.classList.remove('not-empty');
+    }
+    ipt.parentNode.classList.remove('focus');
   });
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    const firstNameInput = document.getElementById('fName');
-    const lastNameInput = document.getElementById('lName');
+  const firstNameInput = document.getElementById('fName');
+  const lastNameInput = document.getElementById('lName');
 
-    firstNameInput.addEventListener('input', capitalizeAndTrim);
-    firstNameInput.addEventListener('blur', capitalizeAndTrim);
+  firstNameInput.addEventListener('input', capitalizeAndTrim);
+  firstNameInput.addEventListener('blur', capitalizeAndTrim);
 
-    lastNameInput.addEventListener('input', capitalizeAndTrim);
-    lastNameInput.addEventListener('blur', capitalizeAndTrim);
+  lastNameInput.addEventListener('input', capitalizeAndTrim);
+  lastNameInput.addEventListener('blur', capitalizeAndTrim);
 
-    function capitalizeAndTrim(event) {
-        const input = event.target;
-        let value = input.value;
+  function capitalizeAndTrim(event) {
+    const input = event.target;
+    let value = input.value;
 
-        // Split the value into words, capitalize each word, and join them back together
-        value = value.split(' ').map(word => {
-            return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-        }).join(' ');
+    // Split the value into words, capitalize each word, and join them back together
+    value = value
+      .split(' ')
+      .map((word) => {
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+      })
+      .join(' ');
 
-        // Remove trailing spaces
-        value = value.replace(/\s+$/, '');
+    // Remove trailing spaces
+    value = value.replace(/\s+$/, '');
 
-        input.value = value;
-    }
+    input.value = value;
+  }
 });
 
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -44,7 +124,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
   // Function to validate email with specific allowed domains
   function validateEmail(email) {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!re.test(String(email).toLowerCase())) {
       return false;
     }
@@ -54,7 +135,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // List of allowed domains
     const allowedDomains = [
-      'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'icloud.com', // Add more domains as needed
+      'gmail.com',
+      'yahoo.com',
+      'hotmail.com',
+      'outlook.com',
+      'icloud.com', // Add more domains as needed
     ];
 
     // Check if the domain is in the list of allowed domains
@@ -63,8 +148,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
   // Function to update UI based on validation
   function updateUI(isValid) {
-    const emailIcon = document.querySelector('#email').parentNode.querySelector('.con-icon');
-    
+    const emailIcon = document
+      .querySelector('#email')
+      .parentNode.querySelector('.con-icon');
+
     if (isValid) {
       emailInput.classList.remove('invalid');
       emailInput.style.borderColor = ''; // Reset to default
@@ -101,39 +188,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
   });
 });
 
-let swiper = new Swiper(".mySwiper", {
+let swiper = new Swiper('.mySwiper', {
   autoplay: {
     delay: 7000,
-    disableOnInteraction: false, 
+    disableOnInteraction: false,
   },
   spaceBetween: 50,
   cssMode: true,
   effect: 'slide',
   pagination: {
-    el: ".swiper-pagination",
+    el: '.swiper-pagination',
     clickable: true,
   },
 });
 
-const sr = ScrollReveal({
-  origin: 'top',
-  distance: '70px',
-  duration: 2500,
-  delay: 400,
-  reset: true,
-});
-
-sr.reveal('.contact-hero-img, .contact-slide-content p', {
-  origin: 'right',
-});
-sr.reveal('.form-wrapper, .contact-head, .contact-slide-content h1', {
-  origin: 'left',
-});
-sr.reveal('.swipe-container, .contact-slide-list', {
-  interval: 100,
-});
-
 var path = window.location.pathname;
-  if (path === "/contact") {
-    document.getElementById("pageTitle").innerText = "Shin Arts - Contact";
-  }
+if (path === '/contact') {
+  document.getElementById('pageTitle').innerText = 'Shin Arts - Contact';
+}

@@ -1,34 +1,96 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const swiper = new Swiper('.swiper', {
-      loop: true,
-      speed: 1500,
-      autoheight: true,
-      autoplay: true,
+document.addEventListener('DOMContentLoaded', function () {
+  const elementsToAnimate = [
+    { selector: '.hero-heading-container', direction: 'left' },
+    { selector: '.hero-info', direction: 'left' },
+    { selector: '.hero-profile', direction: 'right' },
+    { selector: '.art-card', direction: 'bottom' },
+    { selector: '.main-head', direction: 'left' },
+    { selector: '.testimonial-head', direction: 'right' },
+    { selector: '.testimonial-body', direction: 'left' },
+  ];
 
-      navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
+  const generateConfig = (direction) => {
+    let transform;
+    switch (direction) {
+      case 'left':
+        transform = 'translateX(-100px)';
+        break;
+      case 'right':
+        transform = 'translateX(100px)';
+        break;
+      case 'bottom':
+        transform = 'translateY(100px)';
+        break;
+      case 'top':
+        transform = 'translateY(-100px)';
+        break;
+      default:
+        transform = 'translateX(0)';
+    }
+
+    return {
+      initial: {
+        transform,
+        opacity: '0',
+        transition:
+          'transform 1.5s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 1.5s cubic-bezier(0.25, 0.8, 0.25, 1)',
       },
-      pagination:{
-          el: '.swiper-pagination',
+      final: {
+        transform: 'translateX(0)',
+        opacity: '1',
+        transition:
+          'transform 1.5s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 1.5s cubic-bezier(0.25, 0.8, 0.25, 1)',
+      },
+    };
+  };
+
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: [0, 0.75],
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const element = entry.target;
+      const config = JSON.parse(element.dataset.config);
+      if (entry.isIntersecting) {
+        element.style.transition = config.final.transition;
+        element.style.transform = config.final.transform;
+        element.style.opacity = config.final.opacity;
+      } else if (entry.intersectionRatio < 0.75) {
+        element.style.transition = config.initial.transition;
+        element.style.transform = config.initial.transform;
+        element.style.opacity = config.initial.opacity;
       }
+    });
+  }, observerOptions);
+
+  elementsToAnimate.forEach(({ selector, direction }) => {
+    const config = generateConfig(direction);
+    document.querySelectorAll(selector).forEach((element) => {
+      element.style.transform = config.initial.transform;
+      element.style.opacity = config.initial.opacity;
+      element.style.transition = config.initial.transition;
+      element.dataset.config = JSON.stringify(config);
+      observer.observe(element);
+    });
   });
 });
 
-const sr = ScrollReveal({
-  origin: 'top',
-  distance: '70px',
-  duration: 2500,
-  delay: 400,
-  reset: true,
-});
+document.addEventListener('DOMContentLoaded', () => {
+  const swiper = new Swiper('.swiper', {
+    loop: true,
+    speed: 1500,
+    autoheight: true,
+    autoplay: true,
 
-sr.reveal('.hero-profile, .hero-heading-container, .testimonial-body', {
-  origin: 'right',
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    pagination: {
+      el: '.swiper-pagination',
+    },
+  });
 });
-sr.reveal('.hero-info, .testimonial-head', { origin: 'left' });
-sr.reveal('.art-card', {
-  interval: 100,
-});
-
-

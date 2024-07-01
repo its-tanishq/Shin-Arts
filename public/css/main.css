@@ -2018,8 +2018,8 @@ a {
 }
 
 .art-overlay {
-  width: 118px;
-  height: 118px;
+  width: 100px;
+  height: 100px;
   position: absolute;
   top: 65px;
   border-radius: 50%;
@@ -2212,6 +2212,7 @@ a {
   transition: 0.3s;
 }
 
+.about-input-wrap.focus label,
 .about-input-wrap.not-empty label {
   font-size: 0.66rem;
   top: 0.75rem;

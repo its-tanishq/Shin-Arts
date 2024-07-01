@@ -78,8 +78,9 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 document.addEventListener('DOMContentLoaded', (event) => {
-  const emailInput = document.getElementById('email');
+  const inputs = document.querySelectorAll('.about-input');
   const form = document.getElementById('subscribeForm');
+  const emailInput = document.getElementById('email');
 
   // Function to validate email with specific allowed domains
   function validateEmail(email) {
@@ -107,9 +108,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
   // Function to update UI based on validation
   function updateUI(isValid) {
-    const emailIcon = document
-      .querySelector('#email')
-      .parentNode.querySelector('.about-icon');
+    const emailIcon = emailInput.parentNode.querySelector('.about-icon');
 
     if (isValid) {
       emailInput.classList.remove('invalid');
@@ -145,25 +144,27 @@ document.addEventListener('DOMContentLoaded', (event) => {
       updateUI(false);
     }
   });
-});
 
-document.addEventListener('DOMContentLoaded', function () {
-  const textarea = document.getElementById('message');
-  const inputWrap = textarea.closest('.input-wrap');
+  // Add focus and blur event listeners to all inputs
+  inputs.forEach((input) => {
+    input.addEventListener('focus', () => {
+      input.parentElement.classList.add('focus');
+    });
 
-  function checkTextarea() {
-    if (textarea.value.trim() !== '') {
-      inputWrap.classList.add('not-empty');
-    } else {
-      inputWrap.classList.remove('not-empty');
+    input.addEventListener('blur', () => {
+      input.parentElement.classList.remove('focus');
+      if (input.value) {
+        input.parentElement.classList.add('not-empty');
+      } else {
+        input.parentElement.classList.remove('not-empty');
+      }
+    });
+
+    // Initialize the not-empty class for inputs with pre-filled values
+    if (input.value) {
+      input.parentElement.classList.add('not-empty');
     }
-  }
-
-  textarea.addEventListener('input', checkTextarea);
-  textarea.addEventListener('blur', checkTextarea);
-
-  // Initial check in case the textarea is pre-filled
-  checkTextarea();
+  });
 });
 
 $(document).ready(function () {
